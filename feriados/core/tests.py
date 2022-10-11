@@ -11,7 +11,7 @@ class NatalTest(TestCase):
         self.assertContains(self.resp, 'Natal')
     
     def test_template(self):
-        self.assertTemplateUsed(self.resp, 'natal.html')
+        self.assertTemplateUsed(self.resp, 'feriado.html')
 
 class TirantesTest(TestCase):
     def setUp(self):
