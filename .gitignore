@@ -1,0 +1,9 @@
+.venv
+venv
+
+.ideia
+.vscode
+
+*.swp
+*.pyc
+__pycache_
