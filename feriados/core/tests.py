@@ -1,43 +1,44 @@
+from http import HTTPStatus
+from datetime import datetime
+
+from django.shortcuts import resolve_url
 from django.test import TestCase
 
-class NatalTest(TestCase):
+from core.models import FeriadoModel
+
+
+class FeriadoTest(TestCase):
     def setUp(self):
-        self.resp = self.client.get('/')
+        self.resp = self.client.get(resolve_url('feriado'))
 
     def test_200_response(self):
-        self.assertEqual(200, self.resp.status_code)
+        self.assertEqual(HTTPStatus.OK, self.resp.status_code)
 
     def test_texto(self):
-        self.assertContains(self.resp, 'Natal')
-    
+        self.assertContains(self.resp, 'Feriado')
+
     def test_template(self):
         self.assertTemplateUsed(self.resp, 'feriado.html')
 
 class TirantesTest(TestCase):
     def setUp(self):
-        self.resp = self.client.get('/tiradentes')
+        self.resp = self.client.get(resolve_url('tiradentes'))
 
     def test_200_response(self):
-        self.assertEqual(200, self.resp.status_code)
+        self.assertEqual(HTTPStatus.OK, self.resp.status_code)
 
     def test_texto(self):
         self.assertContains(self.resp, 'Tiradentes')
 
 
-from core.models import FeriadoModel
-from datetime import datetime
-
 class FeriadoModelTest(TestCase):
+
     def setUp(self):
         self.feriado = 'Natal'
         self.mes = 12
         self.dia = 25
-        self.cadastro = FeriadoModel(
-            nome=self.feriado,
-            dia=self.dia,
-            mes=self.mes,
-        )
-        self.cadastro.save()
+        self.cadastro = FeriadoModel.objects.create(nome=self.feriado,  dia=self.dia,  mes=self.mes)
+
     def test_created(self):
         self.assertTrue(FeriadoModel.objects.exists())
 
